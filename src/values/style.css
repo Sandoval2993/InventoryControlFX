@@ -1,0 +1,87 @@
+.white-background{
+    -fx-background-color: #fff;
+}
+
+.right-side-border{
+    -fx-border-color: #6F6F6F;
+    -fx-border-width: 0 1 0 0;
+}
+
+.search-container{
+    -fx-border-color: #6F6F6F ;
+    -fx-border-radius: 30;
+}
+
+.transparent{
+    -fx-background-color: rgba(0,0,0,0);
+}
+
+.primary-color{
+    -fx-background-color: #EFF2F6;
+}
+
+.card{
+    -fx-background-color: #fff;
+    -fx-background-radius: 10;
+}
+
+.card2{
+    -fx-background-color: #EC505C;
+    -fx-background-radius: 10;
+}
+
+.center-alignment > .text-field  {
+    -fx-alignment: center;
+}
+
+.combo-box> .list-cell{
+    -fx-alignment: center;
+}
+
+.underline {
+    -fx-background-color: transparent;
+    -fx-border-color: #6F6F6F;
+    -fx-border-width: 0 0 1 0;
+}
+
+.myDialog{
+    -fx-background-color: #fff;
+}
+.myDialog > *.button-bar > *.container{
+    /*-fx-background-color: #a9e200;*/
+}
+.myDialog .header-panel{
+    -fx-background-color:  #041624;
+}
+.myDialog .header-panel *.label{
+    -fx-font-size: 20px;
+    -fx-text-fill: #ffffff;
+    /*-fx-font-weight: bold;*/
+    /*-fx-font-style: italic;*/
+    /*-fx-fill: #041624;*/
+}
+.myDialog > *.label.content{
+    -fx-font-size: 16px;
+/*-fx-font-weight: bold;*/
+}
+
+.borderPane{
+    -fx-border-width: 1 1 1 1;
+    -fx-border-color: #6F6F6F;
+}
+
+.headerBorderPane{
+    -fx-background-color:  #041624;
+    -fx-padding: 0 10 0 0;
+    -fx-spacing: 10;
+    -fx-pref-height: 27;
+    -fx-cursor: hand;
+    -fx-alignment: CENTER_RIGHT;
+}
+
+.headerBorderPane >.button{
+    -fx-pref-width: 24;
+    -fx-pref-height: 11;
+    -fx-background-color: transparent;
+}
+

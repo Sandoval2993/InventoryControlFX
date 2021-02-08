@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="ProductRegistrationBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="678.0" prefWidth="475.0" stylesheets="@../values/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ProductRegistrationController">
+   <center>
+      <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="52.0" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+               <children>
+                  <ImageView fx:id="logoImageView" fitHeight="36.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/carrito-de-comprasx512.png" />
+                     </image>
+                  </ImageView>
+                  <Label alignment="CENTER" prefHeight="53.0" prefWidth="390.0" text="Registro de productos y servicios" underline="true" wrapText="true">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER">
+               <children>
+                  <Spinner fx:id="productIdSpinner" nodeOrientation="LEFT_TO_RIGHT" styleClass="center-alignment" stylesheets="@../values/style.css" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="80.0">
+               <children>
+                  <RadioButton fx:id="productRadioButton" mnemonicParsing="false" onAction="#productRadioButtonOnAction" selected="true" text="Producto">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="A" />
+                     </toggleGroup>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </RadioButton>
+                  <RadioButton fx:id="serviceRadioButton" mnemonicParsing="false" onAction="#serviceRadioButtonOnAction" text="Servicio" toggleGroup="$A">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </RadioButton>
+               </children>
+            </HBox>
+            <VBox alignment="CENTER">
+               <children>
+                  <ImageView fx:id="productImageView" fitHeight="126.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/addImage-x512.png" />
+                     </image>
+                  </ImageView>
+                  <Button fx:id="changeImageButton" mnemonicParsing="false" onAction="#changeImageButtonOnAction" text="Cambiar imagen ..." />
+               </children>
+            </VBox>
+            <VBox>
+               <children>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="141.0" text="Producto:">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="productTextField" alignment="CENTER" prefHeight="25.0" prefWidth="281.0" promptText="Ejemplo: Laptop" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT">
+                     <children>
+                        <Label fx:id="productErrorLabel" alignment="CENTER" contentDisplay="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="17.0" prefWidth="283.0" textAlignment="CENTER" textFill="#fb0f0f" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox>
+               <children>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="141.0" text="Marca:">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="brandTextField" alignment="CENTER" prefHeight="25.0" prefWidth="281.0" promptText="Ejemplo: Lenovo" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT">
+                     <children>
+                        <Label fx:id="brandErrorLabel" alignment="CENTER" contentDisplay="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="17.0" prefWidth="283.0" textAlignment="CENTER" textFill="#fb0f0f" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox>
+               <children>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="20.0" prefWidth="141.0" text="Descripción Adicional:">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="descriptionTextField" alignment="CENTER" prefHeight="25.0" prefWidth="281.0" promptText="Ejemplo: 16 GB 8 RAM" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT">
+                     <children>
+                        <Label fx:id="descriptionErrorLabel" alignment="CENTER" contentDisplay="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="17.0" prefWidth="283.0" textAlignment="CENTER" textFill="#fb0f0f" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox>
+               <children>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="20.0" prefWidth="141.0" text="Grupo:">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="groupComboBox" prefWidth="248.0" promptText="SIN ESPECIFICAR" styleClass="combo-box" stylesheets="@../values/style.css" />
+                        <ImageView fx:id="addGroupImageView" fitHeight="23.0" fitWidth="82.0" onMouseClicked="#addGroupImageViewOnAction" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/addx64.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT">
+                     <children>
+                        <Label fx:id="groupErrorLabel" alignment="CENTER" contentDisplay="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="17.0" prefWidth="283.0" textAlignment="CENTER" textFill="#fb0f0f" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox>
+               <children>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="20.0" prefWidth="141.0" text="Precio de venta:">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="priceTextField" alignment="CENTER" prefHeight="25.0" prefWidth="281.0" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT">
+                     <children>
+                        <Label fx:id="priceErrorLabel" alignment="CENTER" contentDisplay="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="17.0" prefWidth="283.0" textAlignment="CENTER" textFill="#fb0f0f" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" spacing="10.0">
+               <children>
+                  <HBox fx:id="editHBox" alignment="CENTER" spacing="20.0">
+                     <children>
+                        <Button fx:id="editProductButton" graphicTextGap="6.0" mnemonicParsing="false" onAction="#editProductButtonOnAction" style="-fx-background-color: #B60124;" text="Editar" textFill="WHITE">
+                           <graphic>
+                              <ImageView fitHeight="20.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/editar-blanco-x64.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="deleteProductButton" graphicTextGap="6.0" mnemonicParsing="false" onAction="#deleteProductButtonOnAction" style="-fx-background-color: #B60124;" text="Eliminar" textFill="WHITE">
+                           <graphic>
+                              <ImageView fitHeight="20.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/delete-white-x64.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="newProductButton" graphicTextGap="6.0" layoutX="238.0" layoutY="10.0" mnemonicParsing="false" onAction="#newProductButtonOnAction" style="-fx-background-color: #007D5B;" text="Nuevo" textFill="WHITE">
+                           <graphic>
+                              <ImageView fitHeight="20.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/add-blanco-x64.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </HBox>
+                  <Button fx:id="registerButton" mnemonicParsing="false" onAction="#registerButtonOnAction" prefHeight="37.0" prefWidth="249.0" style="-fx-background-color: #041624;" text="Registrar" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="cancelButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#cancelButtonOnAction" prefHeight="22.0" prefWidth="249.0" style="-fx-background-color: #041624;" text="Cancelar" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </VBox>
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </BorderPane.margin>
+      </VBox>
+   </center>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+   <top>
+      <HBox alignment="CENTER_RIGHT" prefHeight="27.0" prefWidth="475.0" styleClass="headerBorderPane" stylesheets="@../values/style.css" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="11.0" fitWidth="24.0" onMouseClicked="#min" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+               <image>
+                  <Image url="@../img/guion-white-x64.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="11.0" fitWidth="24.0" onMouseClicked="#close" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+               <image>
+                  <Image url="@../img/close-white-x64.png" />
+               </image>
+            </ImageView>
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </HBox>
+   </top>
+   <styleClass>
+      <String fx:value="center-alignment" />
+      <String fx:value="borderPane" />
+   </styleClass>
+</BorderPane>

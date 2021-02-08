@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="795.0" styleClass="borderPane" stylesheets="@../values/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MenuController">
+   <left>
+      <VBox alignment="CENTER_LEFT" prefHeight="400.0" prefWidth="230.0" spacing="15.0" stylesheets="@../values/style.css" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="salesButton" graphicTextGap="15.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Ventas">
+               <graphic>
+                  <ImageView fitHeight="38.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/bolsa-de-la-comprax64.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="purchasingButton" graphicTextGap="15.0" mnemonicParsing="false" onAction="#PurchasingButtonOnAction" style="-fx-background-color: transparent;" text="Compras">
+               <graphic>
+                  <ImageView fitHeight="38.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/shopping-cart-2-x64.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="treasuryButton" graphicTextGap="15.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Tesorería">
+               <graphic>
+                  <ImageView fitHeight="38.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/cajero-automaticox64.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="inventoriesButton" graphicTextGap="15.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Inventarios">
+               <graphic>
+                  <ImageView fitHeight="38.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/caja-2-x64.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="thirdPartyButton" graphicTextGap="15.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="172.0" style="-fx-background-color: transparent;" text="Clientes y Proveedores" wrapText="true">
+               <graphic>
+                  <ImageView fitHeight="38.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/caja-2-x64.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="usersButton" graphicTextGap="15.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Usuarios">
+               <graphic>
+                  <ImageView fitHeight="38.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/usuario-4-x64.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="settingButton" graphicTextGap="15.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Configuración">
+               <graphic>
+                  <ImageView fitHeight="38.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/configuracionesx64.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="exitButton" graphicTextGap="15.0" layoutX="15.0" layoutY="457.0" mnemonicParsing="false" onAction="#exitButtonOnAction" style="-fx-background-color: transparent;" text="Salir">
+               <graphic>
+                  <ImageView fitHeight="38.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/log-outx64.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+         </children>
+         <styleClass>
+            <String fx:value="white-background" />
+            <String fx:value="right-side-border" />
+         </styleClass>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </VBox>
+   </left>
+   <center>
+      <VBox prefHeight="400.0" prefWidth="469.0" BorderPane.alignment="CENTER" />
+   </center>
+   <top>
+      <HBox prefHeight="100.0" prefWidth="200.0" styleClass="headerBorderPane" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="11.0" fitWidth="24.0" onMouseClicked="#min" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/guion-white-x64.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="11.0" fitWidth="24.0" onMouseClicked="#close" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/close-white-x64.png" />
+               </image>
+            </ImageView>
+         </children>
+      </HBox>
+   </top>
+</BorderPane>

@@ -1,0 +1,18 @@
+@startuml
+Permissions -* User
+class User{
+-name: String
+-username: String
+-password: var
+-loginStatus: String
++verifyLogin()
++updatePassword()
+}
+class Permissions{
+-permissions_id: int
+-areas: String
+}
+class Admin extends User{
++updatePermissionsUser();
+}
+@enduml
