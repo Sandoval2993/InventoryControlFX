@@ -16,11 +16,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="ProductRegistrationBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="678.0" prefWidth="475.0" stylesheets="@../values/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ProductRegistrationController">
+<BorderPane fx:id="ProductRegistrationBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="690.0" prefWidth="504.0" stylesheets="@../values/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ProductRegistrationController">
    <center>
-      <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="675.0" prefWidth="462.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="52.0" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="52.0" prefHeight="63.0" prefWidth="462.0" spacing="5.0">
                <children>
                   <ImageView fx:id="logoImageView" fitHeight="36.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -34,12 +34,12 @@
                   </Label>
                </children>
             </HBox>
-            <HBox alignment="CENTER">
+            <HBox alignment="CENTER" prefHeight="13.0" prefWidth="462.0">
                <children>
                   <Spinner fx:id="productIdSpinner" nodeOrientation="LEFT_TO_RIGHT" styleClass="center-alignment" stylesheets="@../values/style.css" />
                </children>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="80.0">
+            <HBox alignment="CENTER" prefHeight="40.0" prefWidth="462.0" spacing="80.0">
                <children>
                   <RadioButton fx:id="productRadioButton" mnemonicParsing="false" onAction="#productRadioButtonOnAction" selected="true" text="Producto">
                      <toggleGroup>
@@ -56,9 +56,9 @@
                   </RadioButton>
                </children>
             </HBox>
-            <VBox alignment="CENTER">
+            <VBox alignment="CENTER" prefHeight="137.0" prefWidth="462.0">
                <children>
-                  <ImageView fx:id="productImageView" fitHeight="126.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="productImageView" fitHeight="111.0" fitWidth="119.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../img/addImage-x512.png" />
                      </image>
@@ -66,7 +66,29 @@
                   <Button fx:id="changeImageButton" mnemonicParsing="false" onAction="#changeImageButtonOnAction" text="Cambiar imagen ..." />
                </children>
             </VBox>
-            <VBox>
+            <VBox prefHeight="47.0" prefWidth="462.0">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="141.0" text="Id:">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="productTextField1" alignment="CENTER" prefHeight="25.0" prefWidth="281.0" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT">
+                     <children>
+                        <Label fx:id="productErrorLabel1" alignment="CENTER" contentDisplay="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="17.0" prefWidth="283.0" textAlignment="CENTER" textFill="#fb0f0f" />
+                     </children>
+                  </HBox>
+               </children>
+               <padding>
+                  <Insets top="20.0" />
+               </padding>
+            </VBox>
+            <VBox prefHeight="3.0" prefWidth="462.0">
                <children>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                      <children>
@@ -85,7 +107,7 @@
                   </HBox>
                </children>
             </VBox>
-            <VBox>
+            <VBox prefHeight="0.0" prefWidth="462.0">
                <children>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                      <children>
@@ -104,7 +126,7 @@
                   </HBox>
                </children>
             </VBox>
-            <VBox>
+            <VBox prefHeight="0.0" prefWidth="462.0">
                <children>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                      <children>
@@ -123,7 +145,7 @@
                   </HBox>
                </children>
             </VBox>
-            <VBox>
+            <VBox prefHeight="4.0" prefWidth="462.0">
                <children>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                      <children>
@@ -147,7 +169,7 @@
                   </HBox>
                </children>
             </VBox>
-            <VBox>
+            <VBox prefHeight="21.0" prefWidth="462.0">
                <children>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                      <children>
@@ -166,9 +188,9 @@
                   </HBox>
                </children>
             </VBox>
-            <VBox alignment="CENTER" spacing="10.0">
+            <VBox alignment="CENTER" prefHeight="63.0" prefWidth="462.0" spacing="10.0">
                <children>
-                  <HBox fx:id="editHBox" alignment="CENTER" spacing="20.0">
+                  <HBox fx:id="editHBox" alignment="CENTER" prefHeight="2.0" prefWidth="462.0" spacing="20.0">
                      <children>
                         <Button fx:id="editProductButton" graphicTextGap="6.0" mnemonicParsing="false" onAction="#editProductButtonOnAction" style="-fx-background-color: #B60124;" text="Editar" textFill="WHITE">
                            <graphic>
@@ -219,7 +241,7 @@
             </VBox>
          </children>
          <BorderPane.margin>
-            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            <Insets left="20.0" right="20.0" />
          </BorderPane.margin>
       </VBox>
    </center>
