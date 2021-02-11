@@ -70,12 +70,12 @@
                <children>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                      <children>
-                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="141.0" text="Id:">
+                        <Label fx:id="idLabel" alignment="CENTER" prefHeight="17.0" prefWidth="141.0" text="Id:">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="productTextField1" alignment="CENTER" prefHeight="25.0" prefWidth="281.0" />
+                        <TextField fx:id="idTextField" alignment="CENTER" disable="true" prefHeight="25.0" prefWidth="281.0" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER_RIGHT">

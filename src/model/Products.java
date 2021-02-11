@@ -6,6 +6,7 @@ import dto.ProductDTO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.sql.Array;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -40,5 +41,11 @@ public class Products {
             ex.printStackTrace();
         }
         return updateIdProductList;
+    }
+
+    public ArrayList<ProductDTO> getProductList() throws SQLException {
+        productDAO = new ProductDAO();
+        ArrayList<ProductDTO> listProducts = productDAO.readAll();
+        return listProducts;
     }
 }

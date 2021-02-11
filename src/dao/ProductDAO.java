@@ -99,7 +99,7 @@ private Image image;
     }
 
     @Override
-    public List<ProductDTO> readAll() throws SQLException {
+    public ArrayList<ProductDTO> readAll() throws SQLException {
         PreparedStatement ps;
         ArrayList<ProductDTO> products = new ArrayList<>();
         ResultSet rs;
