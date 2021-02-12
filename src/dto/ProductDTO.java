@@ -1,10 +1,5 @@
 package dto;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.sql.Blob;
-
 public class ProductDTO {
     private int productId;
     private String name;
@@ -13,12 +8,12 @@ public class ProductDTO {
     private int groupId;
     private String inventoryable;
     private Double price;
-    private InputStream imageStream;
+    private byte[] bytes;
 
     public  ProductDTO(){
     }
 
-    public ProductDTO(int productId, String name, String brand, String description, int groupId, String inventoryable, Double price, InputStream imageStream) {
+    public ProductDTO(int productId, String name, String brand, String description, int groupId, String inventoryable, Double price, byte[] bytes) {
         this.productId = productId;
         this.name = name;
         this.brand = brand;
@@ -26,7 +21,7 @@ public class ProductDTO {
         this.groupId = groupId;
         this.inventoryable = inventoryable;
         this.price = price;
-        this.imageStream = imageStream;
+        this.bytes = bytes;
     }
 
     public int getProductId() {
@@ -85,12 +80,12 @@ public class ProductDTO {
         this.price = price;
     }
 
-    public InputStream getImage() {
-        return imageStream;
+    public byte[] getImage() {
+        return bytes;
     }
 
-    public void setImage(InputStream imageStream) {
-        this.imageStream = imageStream;
+    public void setImage(byte[] imageStream) {
+        this.bytes = imageStream;
     }
 }
 

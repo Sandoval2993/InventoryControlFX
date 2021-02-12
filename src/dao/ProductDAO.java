@@ -11,7 +11,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class ProductDAO implements IDAO<ProductDTO> {
 private static final String SQL_CREATE ="INSERT INTO Products (Product, Brand, Description,Group_id,Inventoryable,Price,Image) VALUES (?,?,?,?,?,?,?)";
@@ -34,15 +33,15 @@ private Image image;
            ps.setInt(4,p.getGroupId());
            ps.setString(5,p.getInventoryable());
            ps.setDouble(6,p.getPrice());
-           ps.setBinaryStream(7, p.getImage());
+           ps.setBytes(7, p.getImage());
            System.out.println(p);
            if (ps.executeUpdate()>0){
+               System.out.println("Producto creado");
                return true;
            }
        }catch (SQLException e){
            e.getMessage();
        } finally {
-           System.out.println("Producto creado");
            cnn.closeConnection();
        }
        return false;
@@ -59,16 +58,16 @@ private Image image;
             ps.setInt(4,p.getGroupId());
             ps.setString(5,p.getInventoryable());
             ps.setDouble(6,p.getPrice());
-            ps.setBinaryStream(7, p.getImage());
+            ps.setBytes(7, p.getImage());
             ps.setInt(8,p.getProductId());
 
             if (ps.executeUpdate()>0){
+                System.out.println("Producto actualizado");
                 return true;
             }
         }catch (SQLException e){
-            e.getMessage();
+            e.printStackTrace();
         }finally {
-            System.out.println("Producto actualizado");
             cnn.closeConnection();
         }
         return false;
@@ -86,9 +85,7 @@ private Image image;
             rs = ps.executeQuery();
 
             while (rs.next()){
-//                productDTO = new ProductDTO(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getInt(5),rs.getString(6),rs.getDouble(7),rs.getBinaryStream(8));
-                Blob blob = rs.getBlob(8);
-                productDTO = new ProductDTO(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getInt(5),rs.getString(6),rs.getDouble(7), blob.getBinaryStream());
+                productDTO = new ProductDTO(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getInt(5),rs.getString(6),rs.getDouble(7),rs.getBytes(8));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -110,8 +107,7 @@ private Image image;
             rs = ps.executeQuery();
 
             while (rs.next()){
-                Blob blob = rs.getBlob(8);
-                products.add(new ProductDTO(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getInt(5),rs.getString(6),rs.getDouble(7), blob.getBinaryStream()));
+                products.add(new ProductDTO(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getInt(5),rs.getString(6),rs.getDouble(7), rs.getBytes(8)));
             }
         }catch (SQLException ex){
             ex.getMessage();

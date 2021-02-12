@@ -27,11 +27,8 @@ import javafx.stage.StageStyle;
 import model.Group;
 import model.Products;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -103,10 +100,10 @@ public class ProductRegistrationController implements Initializable {
     private ArrayList<ProductDTO> productList;
     private Products products = new Products();
     private Group group = new Group();
-    private ObservableList idProductsList;
     private SpinnerValueFactory<Integer> spinnerValueFactory;
     private Alert alert = new Alert(Alert.AlertType.INFORMATION);
     private Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+    private byte[] imageBytes;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -132,17 +129,12 @@ public class ProductRegistrationController implements Initializable {
         lockStatusComponents(false);
         visibleStatusComponents(false);
 
-//        try {
-//            productList = products.getProductList();
-//        } catch (SQLException throwables) {
-//            throwables.printStackTrace();
-//        }
-
         try {
             setUpdatedValueFactoryIdSpinner();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+
         setUpdatedListCombobox();
 
         alert.initStyle(StageStyle.TRANSPARENT);
@@ -153,10 +145,10 @@ public class ProductRegistrationController implements Initializable {
         dialogPane.getStyleClass().add("myDialog");
         dialogPane.getStyleClass().add("borderPane");
 
-        DialogPane dialogPane2 = alert.getDialogPane();
+        DialogPane dialogPane2 = alert2.getDialogPane();
         dialogPane2.getStylesheets().add("values/style.css");
         dialogPane2.getStyleClass().add("myDialog");
-        dialogPane.getStyleClass().add("borderPane");
+        dialogPane2.getStyleClass().add("borderPane");
 
         try {
             defaultOverview();
@@ -173,17 +165,33 @@ public class ProductRegistrationController implements Initializable {
     public void changeImageButtonOnAction(ActionEvent event) throws IOException {
         stage = (Stage) ProductRegistrationBorderPane.getScene().getWindow();
         imageFile = fileChooser.showOpenDialog(stage);
+
+        if (imageFile == null && editHBox.isVisible() == false){
+            imageFile = new File("src/img/addImage-x512.png");
+        }
+
         if (imageFile != null) {
-//            System.out.println(file.getAbsolutePath());
             image = new Image(imageFile.getAbsoluteFile().toURI().toString(), productImageView.getFitWidth(), productImageView.getFitHeight(), true, true);
             productImageView.setImage(image);
             productImageView.setPreserveRatio(true);
-        } else {
-//            System.out.println(productDTO.getImage());
-            imageFile = new File("src/img/addImage-x512.png");
+            imageBytes = getFileBytes(imageFile);
         }
-        fileInputStream = new FileInputStream(imageFile);
-//        productDTO.setImage(new FileInputStream(imageFile));
+    }
+
+    public byte[] getFileBytes(File file) throws IOException {
+        FileInputStream fileInputStream = null;
+        byte[] bytes = new byte[(int) file.length()];
+        try {
+            fileInputStream = new FileInputStream(file);
+            fileInputStream.read(bytes);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fileInputStream !=null){
+                fileInputStream.close();
+            }
+        }
+        return bytes;
     }
 
     public void addGroupImageViewOnAction(MouseEvent event) {
@@ -215,7 +223,7 @@ public class ProductRegistrationController implements Initializable {
                     groupDAO.create(groupDTO);
                     groupId = group.searchIdGroup(nameGroup);
                 }
-                productDTO.setImage(fileInputStream);
+                productDTO.setImage(imageBytes);
                 productDTO.setName(productTextField.getText());
                 productDTO.setBrand(brandTextField.getText());
                 productDTO.setDescription(descriptionTextField.getText());
@@ -296,14 +304,13 @@ public class ProductRegistrationController implements Initializable {
     }
 
     public void searchProduct() throws IOException, SQLException {
-//        productDTO = products.getProductList().get(productIdSpinner.getValue()-1);
         productDTO = productList.get(productIdSpinner.getValue() - 1);
         idTextField.setText(String.valueOf(productDTO.getProductId()));
         productTextField.setText(productDTO.getName());
         brandTextField.setText(productDTO.getBrand());
         descriptionTextField.setText(productDTO.getDescription());
         priceTextField.setText(String.valueOf(productDTO.getPrice()));
-        System.out.println(productDTO.getImage());
+        imageBytes = productDTO.getImage();
         buildImageProduct(productDTO.getImage());
         lockStatusComponents(true);
         visibleStatusComponents(true);
@@ -313,26 +320,9 @@ public class ProductRegistrationController implements Initializable {
         }
     }
 
-    public void buildImageProduct(InputStream inputStream) throws IOException {
-        OutputStream outputStream = new FileOutputStream("image.jpg");
-
-//        BufferedImage bufferedImage = ImageIO.read(inputStream);
-//        ImageIO.write(bufferedImage,"jpg",new File("image.jpg"));
-
-        byte[] contents = new byte[1024];
-        int size = 0;
-        while ((size = inputStream.read(contents)) != -1) {
-            outputStream.write(contents, 0, size);
-        }
-
-
-        imageFile = new File("image.jpg");
-//        image = new Image("file:image.jpg", productImageView.getFitWidth(), productImageView.getFitHeight(), true, true);
-        image = new Image(imageFile.toURI().toString());
+    public void buildImageProduct(byte[] bytes) throws IOException, SQLException {
+        image = new Image(new ByteArrayInputStream(bytes));
         productImageView.setImage(image);
-        productImageView.setPreserveRatio(true);
-//        productDTO.setImage(new FileInputStream(imageFile));
-        inputStream.reset();
     }
 
     public boolean validateFields() {
@@ -428,7 +418,6 @@ public class ProductRegistrationController implements Initializable {
         Image addImage = new Image(addImageFile.toURI().toString());
         productImageView.setImage(addImage);
         fileInputStream = new FileInputStream(addImageFile);
-//        productDTO.setImage(new FileInputStream(addImageFile));
     }
 
     public void clearProductRegistration() {
