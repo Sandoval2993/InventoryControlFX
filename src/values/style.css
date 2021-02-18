@@ -1,40 +1,36 @@
-.white-background{
+.white-background {
     -fx-background-color: #fff;
 }
 
-.right-side-border{
+.right-side-border {
     -fx-border-color: #6F6F6F;
     -fx-border-width: 0 1 0 0;
 }
 
-.search-container{
-    -fx-border-color: #6F6F6F ;
-    -fx-border-radius: 30;
+
+.transparent {
+    -fx-background-color: rgba(0, 0, 0, 0);
 }
 
-.transparent{
-    -fx-background-color: rgba(0,0,0,0);
-}
-
-.primary-color{
+.primary-color {
     -fx-background-color: #EFF2F6;
 }
 
-.card{
+.card {
     -fx-background-color: #fff;
     -fx-background-radius: 10;
 }
 
-.card2{
+.card2 {
     -fx-background-color: #EC505C;
     -fx-background-radius: 10;
 }
 
-.center-alignment > .text-field  {
+.center-alignment > .text-field {
     -fx-alignment: center;
 }
 
-.combo-box> .list-cell{
+.combo-box > .list-cell {
     -fx-alignment: center;
 }
 
@@ -44,44 +40,131 @@
     -fx-border-width: 0 0 1 0;
 }
 
-.myDialog{
+.myDialog {
     -fx-background-color: #fff;
 }
-.myDialog > *.button-bar > *.container{
+
+.myDialog > *.button-bar > *.container {
     /*-fx-background-color: #a9e200;*/
 }
-.myDialog .header-panel{
-    -fx-background-color:  #041624;
+
+.myDialog .header-panel {
+    -fx-background-color: #041624;
 }
-.myDialog .header-panel *.label{
+
+.myDialog .header-panel *.label {
     -fx-font-size: 20px;
     -fx-text-fill: #ffffff;
     /*-fx-font-weight: bold;*/
     /*-fx-font-style: italic;*/
     /*-fx-fill: #041624;*/
 }
-.myDialog > *.label.content{
+
+.myDialog > *.label.content {
     -fx-font-size: 16px;
-/*-fx-font-weight: bold;*/
+    /*-fx-font-weight: bold;*/
 }
 
-.borderPane{
+.headerBorderPane {
+    -fx-background-color: #041624;
+    -fx-padding: 0 05 0 0;
+    -fx-spacing: 10;
+    -fx-pref-height: 27;
+    -fx-alignment: CENTER_RIGHT;
+}
+
+.headerBorderPane > #closeButton {
+    -fx-text-fill: null;
+    -fx-pref-height: 10;
+    -fx-pref-width: 10;
+    -fx-background-image: url(../img/close-white-x64.png);
+    -fx-background-size: 10 10;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+}
+
+.headerBorderPane > #minimizeButton {
+    -fx-text-fill: null;
+    -fx-pref-height: 10;
+    -fx-pref-width: 10;
+    -fx-background-image: url(../img/guion-white-x64.png);
+    -fx-background-size: 10 10;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+}
+
+.borderPane {
     -fx-border-width: 1 1 1 1;
     -fx-border-color: #6F6F6F;
 }
 
-.headerBorderPane{
-    -fx-background-color:  #041624;
-    -fx-padding: 0 10 0 0;
-    -fx-spacing: 10;
-    -fx-pref-height: 27;
-    -fx-cursor: hand;
-    -fx-alignment: CENTER_RIGHT;
+.search-container {
+    /*-fx-border-color: #6F6F6F ;*/
+    /*-fx-border-radius: 30;*/
+    -fx-spacing: 00;
+    -fx-pref-height: 30;
 }
 
-.headerBorderPane >.button{
-    -fx-pref-width: 24;
-    -fx-pref-height: 11;
+.search-container > .text-field {
+    -fx-background-color: transparent;
+    -fx-pref-height: 30;
+    -fx-border-color: #6F6F6F;
+    -fx-border-width: 0 0 1 0;
+    /*-fx-alignment: BOTTOM_LEFT;*/
+}
+
+.search-container > .button {
+    -fx-pref-height: 31;
+    -fx-pref-width: 44;
+    -fx-border-color: #6F6F6F;
+    -fx-border-width: 0 0 1 0;
+}
+
+.background-loup {
+    -fx-text-fill: null;
+    -fx-background-image: url(../img/loupex64.png);
+    -fx-background-size: 25 25;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+}
+
+.background-add {
+    -fx-text-fill: null;
+    -fx-background-size: 25 25;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+    -fx-background-image: url(../img/addx64.png);
+}
+
+.table-column {
+    -fx-alignment: CENTER;
+    /*-fx-font-size: 14;*/
+}
+
+.main-container{
+    -fx-background-color: #9567E3;
+    -fx-border-color: #6F6F6F;
+    -fx-border-width: 0 1 0 0;
+    -fx-padding: 5 5 5 5;
+    /*-fx-spacing: 15;*/
+}
+
+.main-container > .button{
+    -fx-pref-height: 80;
+    -fx-pref-width: 100;
+    -fx-text-alignment: center;
+    -fx-text-fill: white;
+    -fx-background-color: transparent;
+    -fx-background-image: url(../img/addx64.png);
+    -fx-background-size: 25 25;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: top;
     -fx-background-color: transparent;
 }
 

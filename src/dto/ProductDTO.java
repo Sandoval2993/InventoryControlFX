@@ -8,12 +8,12 @@ public class ProductDTO {
     private int groupId;
     private String inventoryable;
     private Double price;
-    private byte[] bytes;
+    private byte[] imageBytes;
 
     public  ProductDTO(){
     }
 
-    public ProductDTO(int productId, String name, String brand, String description, int groupId, String inventoryable, Double price, byte[] bytes) {
+    public ProductDTO(int productId, String name, String brand, String description, int groupId, String inventoryable, Double price, byte[] imageBytes) {
         this.productId = productId;
         this.name = name;
         this.brand = brand;
@@ -21,7 +21,7 @@ public class ProductDTO {
         this.groupId = groupId;
         this.inventoryable = inventoryable;
         this.price = price;
-        this.bytes = bytes;
+        this.imageBytes = imageBytes;
     }
 
     public int getProductId() {
@@ -80,12 +80,12 @@ public class ProductDTO {
         this.price = price;
     }
 
-    public byte[] getImage() {
-        return bytes;
+    public byte[] getImageBytes() {
+        return imageBytes;
     }
 
-    public void setImage(byte[] imageStream) {
-        this.bytes = imageStream;
+    public void setImageBytes(byte[] imageBytes) {
+        this.imageBytes = imageBytes;
     }
 }
 

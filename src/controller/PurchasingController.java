@@ -22,7 +22,7 @@ public class PurchasingController implements Initializable {
     @FXML
     private Button exitButton;
     @FXML
-    private ImageView createProductImageView;
+    private Button createProductButton;
     @FXML
     private BorderPane purchasingBorderPane;
 
@@ -40,7 +40,7 @@ public class PurchasingController implements Initializable {
         stage.close();
     }
 
-    public void createProductImageViewOnAction(MouseEvent event){
+    public void createProductButtonOnAction(ActionEvent event){
        createProductRegistrationForm();
     }
 

@@ -60,16 +60,7 @@
    <top>
       <HBox alignment="CENTER_RIGHT" prefHeight="27.0" prefWidth="475.0" style="0: 0;" styleClass="headerBorderPane" stylesheets="@../values/style.css" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="11.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../img/guion-white-x64.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="11.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../img/close-white-x64.png" />
-               </image>
-            </ImageView>
+            <Button fx:id="closeButton" mnemonicParsing="false" onAction="#close" prefHeight="25.0" prefWidth="48.0" text="Button" />
          </children>
       </HBox>
    </top>

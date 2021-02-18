@@ -6,6 +6,7 @@ import dto.GroupDTO;
 import dto.ProductDTO;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,17 +21,18 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import model.Group;
-import model.Products;
+import model.Product;
+import view.AlertBox;
+import view.ImageProcessor;
 
 import java.io.*;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -76,6 +78,10 @@ public class ProductRegistrationController implements Initializable {
     @FXML
     private Label idLabel;
     @FXML
+    private Label operationErrorLabel;
+    @FXML
+    private Label imageErrorLabel;
+    @FXML
     private Label productErrorLabel;
     @FXML
     private Label brandErrorLabel;
@@ -93,17 +99,22 @@ public class ProductRegistrationController implements Initializable {
     private GroupDTO groupDTO = new GroupDTO();
     private GroupDAO groupDAO = new GroupDAO();
     private FileChooser fileChooser;
-    private FileInputStream fileInputStream;
     private File imageFile;
     private Stage stage;
     private Image image;
     private ArrayList<ProductDTO> productList;
-    private Products products = new Products();
+    private Product product = new Product();
     private Group group = new Group();
     private SpinnerValueFactory<Integer> spinnerValueFactory;
     private Alert alert = new Alert(Alert.AlertType.INFORMATION);
     private Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
     private byte[] imageBytes;
+    private Map listGroupMap;
+    private AlertBox alertBox = new AlertBox();
+    private ImageProcessor imageProcessor = new ImageProcessor();
+
+    public ProductRegistrationController() throws IOException {
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -126,35 +137,7 @@ public class ProductRegistrationController implements Initializable {
         productDTO.setInventoryable("YES");
         groupComboBox.setEditable(false);
 
-        lockStatusComponents(false);
-        visibleStatusComponents(false);
-
-        try {
-            setUpdatedValueFactoryIdSpinner();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-        setUpdatedListCombobox();
-
-        alert.initStyle(StageStyle.TRANSPARENT);
-        alert2.initStyle(StageStyle.TRANSPARENT);
-
-        DialogPane dialogPane = alert.getDialogPane();
-        dialogPane.getStylesheets().add("values/style.css");
-        dialogPane.getStyleClass().add("myDialog");
-        dialogPane.getStyleClass().add("borderPane");
-
-        DialogPane dialogPane2 = alert2.getDialogPane();
-        dialogPane2.getStylesheets().add("values/style.css");
-        dialogPane2.getStyleClass().add("myDialog");
-        dialogPane2.getStyleClass().add("borderPane");
-
-        try {
-            defaultOverview();
-        } catch (SQLException | FileNotFoundException throwables) {
-            throwables.printStackTrace();
-        }
+        defaultOverview();
 
         productTextField.textProperty().addListener(((observableValue, oldValue, newValue) -> productTextField.setText(newValue.toUpperCase())));
         brandTextField.textProperty().addListener(((observableValue, oldValue, newValue) -> brandTextField.setText(newValue.toUpperCase())));
@@ -165,10 +148,6 @@ public class ProductRegistrationController implements Initializable {
     public void changeImageButtonOnAction(ActionEvent event) throws IOException {
         stage = (Stage) ProductRegistrationBorderPane.getScene().getWindow();
         imageFile = fileChooser.showOpenDialog(stage);
-
-        if (imageFile == null && editHBox.isVisible() == false){
-            imageFile = new File("src/img/addImage-x512.png");
-        }
 
         if (imageFile != null) {
             image = new Image(imageFile.getAbsoluteFile().toURI().toString(), productImageView.getFitWidth(), productImageView.getFitHeight(), true, true);
@@ -187,7 +166,7 @@ public class ProductRegistrationController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            if (fileInputStream !=null){
+            if (fileInputStream != null) {
                 fileInputStream.close();
             }
         }
@@ -213,52 +192,35 @@ public class ProductRegistrationController implements Initializable {
         productDTO.setInventoryable("NO");
     }
 
-    public void registerButtonOnAction(ActionEvent event) throws SQLException, IOException {
+    public void registerButtonOnAction(ActionEvent event){
         if (validateFields()) {
             try {
-                int groupId = group.searchIdGroup(groupComboBox.getValue().toString());
-                if (groupId == 0) {
+                if (listGroupMap.get(groupComboBox.getValue())==null) {
                     String nameGroup = groupComboBox.getEditor().getText();
                     groupDTO.setGroupName(nameGroup);
                     groupDAO.create(groupDTO);
-                    groupId = group.searchIdGroup(nameGroup);
+                    updateListCombobox();
                 }
-                productDTO.setImage(imageBytes);
+                productDTO.setImageBytes(imageBytes);
                 productDTO.setName(productTextField.getText());
                 productDTO.setBrand(brandTextField.getText());
                 productDTO.setDescription(descriptionTextField.getText());
-                productDTO.setGroupId(groupId);
+                productDTO.setGroupId((Integer) listGroupMap.get(groupComboBox.getValue()));
                 productDTO.setPrice(Double.parseDouble(priceTextField.getText()));
                 if (editHBox.visibleProperty().getValue()) {
                     if (productDAO.update(productDTO)) {
                         defaultSearchView();
-                        alert.setAlertType(Alert.AlertType.INFORMATION);
-                        alert.setTitle("Actualización");
-                        alert.setHeaderText("Actualización exitosa");
-                        alert.setContentText("Los datos fueron actualizados satisfactoriamente.");
-                        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-                        alert.showAndWait();
+                        alertBox.getAlertUpdate().showAndWait();
                     } else {
-                        alert.setAlertType(Alert.AlertType.ERROR);
-                        alert.setTitle("Error");
-                        alert.setHeaderText("Actualización no realizada");
-                        alert.showAndWait();
+                        alertBox.getAlertError().showAndWait();
                     }
                 } else {
                     if (productDAO.create(productDTO)) {
-                        setUpdatedValueFactoryIdSpinner();
-                        setUpdatedListCombobox();
+                        String gloss = productDTO.getName() + " - " + productDTO.getBrand() + " - " + productDTO.getDescription() + ".";
                         defaultOverview();
-                        alert.setAlertType(Alert.AlertType.INFORMATION);
-                        alert.setTitle("Registro");
-                        alert.setHeaderText("Registro exitoso");
-                        alert.setContentText("Se realizó el registro de " + productDTO.getName() + " - " + productDTO.getBrand() + " - " + productDTO.getDescription() + ".");
-                        alert.showAndWait();
+                        alertBox.getAlertCreate(gloss).showAndWait();
                     } else {
-                        alert.setAlertType(Alert.AlertType.ERROR);
-                        alert.setTitle("Error");
-                        alert.setHeaderText("Registro no realizado");
-                        alert.showAndWait();
+                        alertBox.getAlertError().showAndWait();
                     }
                 }
             } catch (SQLException ex) {
@@ -271,27 +233,16 @@ public class ProductRegistrationController implements Initializable {
         lockStatusComponents(false);
     }
 
-    public void deleteProductButtonOnAction(ActionEvent event) throws SQLException, FileNotFoundException {
-        alert.setAlertType(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Eliminación");
-        alert.setHeaderText("Eliminación en curso");
-        alert.setContentText("¿Confirma que desea eliminar el item " + productTextField.getText() + " - " + brandTextField.getText() + " - " + descriptionTextField.getText() + "?");
-        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-        Optional<ButtonType> result = alert.showAndWait();
+    public void deleteProductButtonOnAction(ActionEvent event) {
+        String productDetail = productDTO.getName() + " - " + productDTO.getBrand() + " - " + productDTO.getDescription() + ".";
+        Optional<ButtonType> result = alertBox.getAlertDelete(productDetail).showAndWait();
         if (result.get() == ButtonType.OK) {
             try {
                 if (productDAO.delete(idTextField.getText())) {
-                    alert2.setTitle("Eliminación");
-                    alert2.setHeaderText("Eliminación exitosa.");
-                    alert2.setContentText(null);
-                    alert2.showAndWait();
-                    setUpdatedValueFactoryIdSpinner();
+                    alertBox.getAlertInformationDelete().showAndWait();
                     defaultOverview();
                 } else {
-                    alert2.setAlertType(Alert.AlertType.ERROR);
-                    alert2.setTitle("Error");
-                    alert2.setHeaderText("Actualización no realizada.");
-                    alert2.showAndWait();
+                    alertBox.getAlertError().showAndWait();
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -303,43 +254,40 @@ public class ProductRegistrationController implements Initializable {
         defaultOverview();
     }
 
-    public void searchProduct() throws IOException, SQLException {
-        productDTO = productList.get(productIdSpinner.getValue() - 1);
-        idTextField.setText(String.valueOf(productDTO.getProductId()));
-        productTextField.setText(productDTO.getName());
-        brandTextField.setText(productDTO.getBrand());
-        descriptionTextField.setText(productDTO.getDescription());
-        priceTextField.setText(String.valueOf(productDTO.getPrice()));
-        imageBytes = productDTO.getImage();
-        buildImageProduct(productDTO.getImage());
-        lockStatusComponents(true);
-        visibleStatusComponents(true);
-        if (groupDAO.read(productDTO.getGroupId()) != null) {
-            groupDTO = groupDAO.read(productDTO.getGroupId());
-            groupComboBox.setValue(groupDTO.getGroupName());
+    public void searchProduct() {
+        try {
+            productDTO = productList.get(productIdSpinner.getValue() - 1);
+            idTextField.setText(String.valueOf(productDTO.getProductId()));
+            productTextField.setText(productDTO.getName());
+            brandTextField.setText(productDTO.getBrand());
+            descriptionTextField.setText(productDTO.getDescription());
+            priceTextField.setText(String.valueOf(productDTO.getPrice()));
+            imageBytes = productDTO.getImageBytes();
+            buildImageProduct(productDTO.getImageBytes());
+            lockStatusComponents(true);
+            visibleStatusComponents(true);
+            if (groupDAO.read(productDTO.getGroupId()) != null) {
+                groupDTO = groupDAO.read(productDTO.getGroupId());
+                groupComboBox.setValue(groupDTO.getGroupName());
+            }
+        } catch (SQLException exception) {
+            exception.printStackTrace();
         }
     }
 
-    public void buildImageProduct(byte[] bytes) throws IOException, SQLException {
+    public void buildImageProduct(byte[] bytes) {
         image = new Image(new ByteArrayInputStream(bytes));
         productImageView.setImage(image);
     }
 
     public boolean validateFields() {
         int errorCounter = 0;
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.initStyle(StageStyle.TRANSPARENT);
-        alert.setTitle("Datos inválidos");
         if (productRadioButton.isSelected() == false && serviceRadioButton.isSelected() == false) {
-            alert.setHeaderText("Identificación no realizada");
-            alert.setContentText("Indique si el registro corresponde a un producto o servicio seleccionando la casilla correspondiente.");
-            alert.showAndWait();
+            operationErrorLabel.setText("Indique si el registro corresponde a un producto o servicio.");
             errorCounter++;
         }
         if (productImageView.getImage() == null) {
-            alert.setHeaderText("Error de imagen");
-            alert.setContentText("No se ha seleccionado ninguna imagen válida para el registro.");
-            alert.showAndWait();
+            imageErrorLabel.setText("Seleccione una imagen para el producto o servicio.");
             errorCounter++;
         }
         if (productTextField.getText().isEmpty()) {
@@ -395,13 +343,22 @@ public class ProductRegistrationController implements Initializable {
         }
     }
 
-    public void defaultOverview() throws SQLException, FileNotFoundException {
+    public void defaultOverview() {
+        updateValueFactorySpinner();
+        updateListCombobox();
         defaultValueSpinner();
         defaultValueGroupCombobox();
         defaultImageProduct();
         clearProductRegistration();
         lockStatusComponents(false);
         visibleStatusComponents(false);
+    }
+
+    public void defaultSearchView() throws SQLException {
+        updateValueFactorySpinner();
+        updateListCombobox();
+        lockStatusComponents(true);
+        visibleStatusComponents(true);
     }
 
     public void defaultValueSpinner() {
@@ -413,11 +370,15 @@ public class ProductRegistrationController implements Initializable {
         groupComboBox.setValue(groupComboBox.getItems().get(0));
     }
 
-    public void defaultImageProduct() throws FileNotFoundException {
-        File addImageFile = new File("src/img/addImage-x512.png");
-        Image addImage = new Image(addImageFile.toURI().toString());
-        productImageView.setImage(addImage);
-        fileInputStream = new FileInputStream(addImageFile);
+    public void defaultImageProduct() {
+        try {
+            ImageProcessor imageProcessor = new ImageProcessor();
+            productImageView.setImage(imageProcessor.getImage());
+            productImageView.setPreserveRatio(true);
+            imageBytes = imageProcessor.getImageBytes();
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
     }
 
     public void clearProductRegistration() {
@@ -447,49 +408,44 @@ public class ProductRegistrationController implements Initializable {
 
     public void visibleStatusComponents(boolean state) {
         editHBox.visibleProperty().setValue(state);
-//        idLabel.setVisible(state);
-//        idTextField.setVisible(state);
     }
 
-    public void defaultSearchView() throws SQLException {
-        lockStatusComponents(true);
-        visibleStatusComponents(true);
+    public void updateListCombobox() {
+        listGroupMap = group.getGroupMap();
+        ObservableList<String> listNameGroup = FXCollections.observableArrayList(listGroupMap.keySet());
+        groupComboBox.setItems(listNameGroup);
     }
 
-    public void setUpdatedListCombobox() {
-        groupComboBox.setItems(group.getUpdateNameGroupList());
-    }
-
-    public void setUpdatedValueFactoryIdSpinner() throws SQLException {
-        productList = products.getProductList();
-        int sizeProductList = productList.size();
-        //llenando Spinner
-        spinnerValueFactory = null;
-        spinnerValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, sizeProductList + 1, sizeProductList + 1);
-        spinnerValueFactory.setWrapAround(true);
-        productIdSpinner.setValueFactory(spinnerValueFactory);
-        spinnerValueFactory.valueProperty().addListener(((observableValue, oldValue, newValue) -> {
-            try {
+    public void updateValueFactorySpinner() {
+        try {
+            productList = product.getProductList();
+            int sizeProductList = productList.size();
+            //llenando Spinner
+            spinnerValueFactory = null;
+            spinnerValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, sizeProductList + 1, sizeProductList + 1);
+            spinnerValueFactory.setWrapAround(true);
+            productIdSpinner.setValueFactory(spinnerValueFactory);
+            spinnerValueFactory.valueProperty().addListener(((observableValue, oldValue, newValue) -> {
                 if (newValue != sizeProductList + 1) {
                     searchProduct();
                 } else {
                     defaultOverview();
                 }
-            } catch (SQLException | IOException throwables) {
-                throwables.printStackTrace();
-            }
-        }));
-        productIdSpinner.getStyleClass().add(productIdSpinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
+            }));
+            productIdSpinner.getStyleClass().add(productIdSpinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
     }
 
     @FXML
-    public void min(MouseEvent event) {
+    public void min(ActionEvent event) {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setIconified(true);
     }
 
     @FXML
-    public void close(MouseEvent event) {
+    public void close(ActionEvent event) {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
     }
@@ -497,11 +453,7 @@ public class ProductRegistrationController implements Initializable {
     public class SpinnerListener implements ChangeListener<Integer> {
         @Override
         public void changed(ObservableValue<? extends Integer> observableValue, Integer oldValue, Integer newValue) {
-            try {
-                searchProduct();
-            } catch (SQLException | IOException throwables) {
-                throwables.printStackTrace();
-            }
+            searchProduct();
         }
     }
 

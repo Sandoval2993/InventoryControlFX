@@ -141,11 +141,7 @@
                                           <String fx:value="center-alignment" />
                                        </styleClass>
                                     </Spinner>
-                                    <ImageView fitHeight="23.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../img/loupex32.png" />
-                                       </image>
-                                    </ImageView>
+                                    <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="40.0" styleClass="background-loup" text="Button" />
                                  </children>
                               </HBox>
                            </children>
@@ -155,16 +151,16 @@
                   <Line endX="900.0" startX="-100.0" strokeWidth="3.0" />
                   <HBox alignment="CENTER_LEFT" prefHeight="95.0" prefWidth="980.0" spacing="15.0">
                      <children>
-                        <VBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="460.0">
+                        <VBox alignment="CENTER_RIGHT" prefHeight="95.0" prefWidth="462.0">
                            <children>
-                              <HBox prefHeight="25.0" prefWidth="278.0" spacing="5.0">
+                              <HBox prefHeight="25.0" prefWidth="278.0" spacing="5.0" styleClass="search-container" stylesheets="@../values/style.css">
                                  <children>
                                     <Label alignment="CENTER" prefHeight="29.0" prefWidth="73.0" text="Proveedor:">
                                        <font>
                                           <Font name="System Bold" size="13.0" />
                                        </font>
                                     </Label>
-                                    <TextField alignment="TOP_LEFT" prefHeight="30.0" prefWidth="307.0" promptText="Código o Razón Social" styleClass="underline" stylesheets="@../values/style.css">
+                                    <TextField alignment="TOP_LEFT" prefHeight="31.0" prefWidth="290.0" promptText="Código o Razón Social" styleClass="underline" stylesheets="@../values/style.css">
                                        <opaqueInsets>
                                           <Insets />
                                        </opaqueInsets>
@@ -172,16 +168,8 @@
                                           <Font size="14.0" />
                                        </font>
                                     </TextField>
-                                    <ImageView fitHeight="23.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../img/loupex32.png" />
-                                       </image>
-                                    </ImageView>
-                                    <ImageView fitHeight="23.0" fitWidth="82.0" layoutX="422.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../img/addx64.png" />
-                                       </image>
-                                    </ImageView>
+                                    <Button mnemonicParsing="false" styleClass="background-loup" text="Button" />
+                                    <Button mnemonicParsing="false" styleClass="background-add" text="Button" />
                                  </children>
                               </HBox>
                               <ListView prefHeight="50.0" prefWidth="187.0" style="visibility: false;">
@@ -202,11 +190,7 @@
                                  <children>
                                     <ComboBox prefHeight="25.0" prefWidth="58.0" promptText="S/" />
                                     <TextField alignment="CENTER" editable="false" prefHeight="25.0" prefWidth="58.0" promptText="3.335" />
-                                    <ImageView fitHeight="23.0" fitWidth="82.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../img/addx64.png" />
-                                       </image>
-                                    </ImageView>
+                                    <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="31.0" styleClass="background-add" text="Button" />
                                  </children>
                               </HBox>
                            </children>
@@ -230,7 +214,7 @@
                                           <Font name="System Bold" size="13.0" />
                                        </font>
                                     </Label>
-                                    <TextField alignment="CENTER" prefHeight="30.0" prefWidth="78.0" styleClass="underline" stylesheets="@../values/style.css">
+                                    <TextField alignment="CENTER" prefHeight="22.0" prefWidth="78.0" styleClass="underline" stylesheets="@../values/style.css">
                                        <opaqueInsets>
                                           <Insets />
                                        </opaqueInsets>
@@ -266,7 +250,7 @@
                                           <Font size="11.0" />
                                        </font>
                                     </Label>
-                                    <Label alignment="BOTTOM_CENTER" layoutX="186.0" layoutY="10.0" prefHeight="16.0" prefWidth="127.0" text="Fecha de contabilización">
+                                    <Label alignment="BOTTOM_CENTER" layoutX="186.0" layoutY="10.0" prefHeight="16.0" prefWidth="127.0" text="Fecha de registro">
                                        <font>
                                           <Font size="11.0" />
                                        </font>
@@ -296,7 +280,7 @@
                         </VBox>
                      </children>
                   </HBox>
-                  <Line endX="900.0" startX="-100.0" />
+                  <Line endX="900.0" layoutX="112.0" layoutY="119.0" startX="-100.0" />
                </children>
             </VBox>
             <HBox>
@@ -305,9 +289,9 @@
                      <children>
                         <VBox prefHeight="28.0" prefWidth="602.0">
                            <children>
-                              <HBox prefHeight="100.0" prefWidth="602.0" spacing="5.0">
+                              <HBox prefHeight="31.0" prefWidth="676.0" spacing="5.0" styleClass="search-container" stylesheets="@../values/style.css">
                                  <children>
-                                    <TextField prefHeight="25.0" prefWidth="646.0" promptText="Digite Producto" style="-fx-background-color: transparent;">
+                                    <TextField prefHeight="31.0" prefWidth="592.0" promptText="Digite Producto" style="-fx-background-color: transparent;">
                                        <opaqueInsets>
                                           <Insets />
                                        </opaqueInsets>
@@ -315,22 +299,13 @@
                                           <Font size="14.0" />
                                        </font>
                                     </TextField>
-                                    <ImageView fitHeight="23.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../img/loupex32.png" />
-                                       </image>
-                                    </ImageView>
-                                    <ImageView fx:id="createProductImageView" fitHeight="23.0" fitWidth="82.0" onMouseClicked="#createProductImageViewOnAction" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../img/addx64.png" />
-                                       </image>
-                                    </ImageView>
+                                    <Button fx:id="searchProductButton" mnemonicParsing="false" prefHeight="128.0" prefWidth="341.0" styleClass="background-loup" stylesheets="@../values/style.css" text="Button" />
+                                    <Button fx:id="createProductButton" mnemonicParsing="false" onAction="#createProductButtonOnAction" styleClass="background-add" text="Button" />
                                  </children>
                               </HBox>
                            </children>
                         </VBox>
-                        <Line endX="570.2929077148438" endY="1.6033649444580078E-5" startX="-100.0" />
-                        <VBox prefHeight="260.0" prefWidth="675.0" spacing="20.0">
+                        <VBox prefHeight="260.0" prefWidth="609.0" spacing="20.0">
                            <children>
                               <TableView prefHeight="200.0" prefWidth="200.0">
                                 <columns>
@@ -431,23 +406,8 @@
    <top>
       <HBox alignment="CENTER_RIGHT" onMouseClicked="#close" prefHeight="100.0" prefWidth="200.0" styleClass="headerBorderPane" stylesheets="@../values/style.css" BorderPane.alignment="CENTER">
          <children>
-            <Button graphicTextGap="0.0" mnemonicParsing="false" onAction="#min" prefHeight="24.0" prefWidth="8.0">
-               <graphic>
-                  <ImageView fitHeight="11.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../img/guion-white-x64.png" />
-                     </image></ImageView>
-               </graphic>
-            </Button>
-            <Button graphicTextGap="0.0" mnemonicParsing="false" onAction="#close" prefHeight="24.0" prefWidth="8.0">
-               <graphic>
-                  <ImageView fitHeight="11.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../img/close-white-x64.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
+            <Button fx:id="minimizeButton" mnemonicParsing="false" onAction="#min" text="Button" />
+            <Button fx:id="closeButton" mnemonicParsing="false" onAction="#close" text="Button" />
          </children></HBox>
    </top>
 </BorderPane>

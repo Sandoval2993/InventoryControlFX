@@ -1,10 +1,14 @@
 package controller;
 
 import connection.DatabaseConnection;
+import dao.UserDAO;
+import dto.ProductDTO;
+import dto.UserDTO;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -17,14 +21,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import javafx.stage.StageStyle;
+import model.User;
 
-import javax.xml.crypto.Data;
 import java.io.File;
 import java.net.URL;
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
@@ -43,6 +46,7 @@ public class LoginController implements Initializable {
     @FXML
     private PasswordField passwordField;
 
+    private UserDAO userDAO = new UserDAO();
     private double xOffset = 0;
     private double yOffset = 0;
 
@@ -59,7 +63,10 @@ public class LoginController implements Initializable {
 
     public void loginButtonOnAction(ActionEvent event) throws SQLException {
        if (usernameTextField.getText().isBlank()==false && passwordField.getText().isBlank()==false){
-           validateLogin();
+           if (validateLogin()){
+               closeLoginForm();
+               createMenuForm();
+           }
        }else{
            loginErrorLabel.setText("Usuario o contraseña inválidos.");
        }
@@ -69,28 +76,18 @@ public class LoginController implements Initializable {
         closeLoginForm();
     }
 
-    public void validateLogin() throws SQLException {
-        DatabaseConnection instance = DatabaseConnection.getInstance();
-        cnn = instance.getCnn();
-        String verifyLogin = "SELECT count(1) FROM user_account WHERE username='" + usernameTextField.getText() + "' AND password='" + passwordField.getText() + "'";
-       try{
-           Statement statement = cnn.createStatement();
-           ResultSet queryResult = statement.executeQuery(verifyLogin);
-
-           while (queryResult.next()){
-               if (queryResult.getInt(1)==1){
-//                   createAccountForm();
-                   createMenuForm();
-                   closeLoginForm();
-//                   loginErrorLabel.setText("Felicitaciones");
-               }else {
-                   loginErrorLabel.setText("Login inválido, trata nuevamente");
-               }
-           }
-       }catch (Exception e){
-            e.printStackTrace();
-            e.getCause();
+    public boolean validateLogin() {
+        User user = new User();
+        Map listUserMap = user.getUserMap();
+        UserDTO userDTO = (UserDTO) listUserMap.get(usernameTextField.getText());
+        if (userDTO!=null){
+            if (userDTO.getPassword().equals(passwordField.getText())){
+                loginErrorLabel.setText("Logeado correctamente.");
+                return true;
+            }
         }
+        loginErrorLabel.setText("Usuario o contraseña inválidos.");
+        return false;
     }
 
     public void createAccountForm(){
@@ -138,4 +135,9 @@ public class LoginController implements Initializable {
         stage.close();
     }
 
+    @FXML
+    private void close(ActionEvent event){
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        stage.close();
+    }
 }

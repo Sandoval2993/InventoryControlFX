@@ -36,7 +36,11 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="13.0" prefWidth="462.0">
                <children>
-                  <Spinner fx:id="productIdSpinner" nodeOrientation="LEFT_TO_RIGHT" styleClass="center-alignment" stylesheets="@../values/style.css" />
+                  <Spinner fx:id="productIdSpinner" nodeOrientation="LEFT_TO_RIGHT" stylesheets="@../values/style.css">
+                     <styleClass>
+                        <String fx:value="center-alignment" />
+                        <String fx:value="split-arrows-horizontal" />
+                     </styleClass></Spinner>
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="40.0" prefWidth="462.0" spacing="80.0">
@@ -58,12 +62,22 @@
             </HBox>
             <VBox alignment="CENTER" prefHeight="137.0" prefWidth="462.0">
                <children>
+                  <HBox alignment="CENTER">
+                     <children>
+                        <Label fx:id="operationErrorLabel" alignment="CENTER" contentDisplay="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="17.0" prefWidth="283.0" textAlignment="CENTER" textFill="#fb0f0f" />
+                     </children>
+                  </HBox>
                   <ImageView fx:id="productImageView" fitHeight="111.0" fitWidth="119.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../img/addImage-x512.png" />
                      </image>
                   </ImageView>
                   <Button fx:id="changeImageButton" mnemonicParsing="false" onAction="#changeImageButtonOnAction" text="Cambiar imagen ..." />
+                  <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0">
+                     <children>
+                        <Label fx:id="imageErrorLabel" alignment="CENTER" contentDisplay="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="17.0" prefWidth="283.0" textAlignment="CENTER" textFill="#fb0f0f" />
+                     </children>
+                  </HBox>
                </children>
             </VBox>
             <VBox prefHeight="47.0" prefWidth="462.0">
@@ -238,6 +252,9 @@
                <VBox.margin>
                   <Insets />
                </VBox.margin>
+               <padding>
+                  <Insets bottom="10.0" />
+               </padding>
             </VBox>
          </children>
          <BorderPane.margin>
@@ -250,21 +267,13 @@
    </opaqueInsets>
    <top>
       <HBox alignment="CENTER_RIGHT" prefHeight="27.0" prefWidth="475.0" styleClass="headerBorderPane" stylesheets="@../values/style.css" BorderPane.alignment="CENTER">
-         <children>
-            <ImageView fitHeight="11.0" fitWidth="24.0" onMouseClicked="#min" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
-               <image>
-                  <Image url="@../img/guion-white-x64.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="11.0" fitWidth="24.0" onMouseClicked="#close" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
-               <image>
-                  <Image url="@../img/close-white-x64.png" />
-               </image>
-            </ImageView>
-         </children>
          <BorderPane.margin>
             <Insets />
          </BorderPane.margin>
+         <children>
+            <Button fx:id="minimizeButton" mnemonicParsing="false" onAction="#min" text="Button" />
+            <Button fx:id="closeButton" mnemonicParsing="false" onAction="#close" text="Button" />
+         </children>
       </HBox>
    </top>
    <styleClass>

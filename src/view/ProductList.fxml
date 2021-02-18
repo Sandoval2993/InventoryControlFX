@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="635.0" prefWidth="913.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ProductListController">
+   <top>
+      <HBox prefHeight="24.0" prefWidth="600.0" styleClass="headerBorderPane" stylesheets="@../values/style.css" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="minimizeButton" mnemonicParsing="false" onAction="#min" text="Button" />
+            <Button fx:id="closeButton" mnemonicParsing="false" onAction="#close" text="Button" />
+         </children>
+      </HBox>
+   </top>
+   <center>
+      <SplitPane dividerPositions="0.11056105610561057, 0.30363036303630364" nodeOrientation="LEFT_TO_RIGHT" orientation="VERTICAL" BorderPane.alignment="CENTER">
+        <items>
+            <VBox alignment="CENTER" prefHeight="88.0" prefWidth="911.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                     <children>
+                        <ImageView fitHeight="39.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/caja-2-x64.png" />
+                           </image>
+                        </ImageView>
+                        <Label prefHeight="45.0" prefWidth="291.0" text="Lista de productos y servicios" textAlignment="CENTER" textFill="#6f6f6f">
+                           <font>
+                              <Font size="22.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </HBox>
+               </children>
+            </VBox>
+            <HBox prefHeight="87.0" prefWidth="911.0">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="86.0" prefWidth="711.0" spacing="10.0">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="24.0" prefWidth="778.0" spacing="10.0">
+                           <children>
+                              <Label text="Id:">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="40.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <TextField prefHeight="25.0" prefWidth="49.0">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </TextField>
+                              <Label text="Nombre:">
+                                 <HBox.margin>
+                                    <Insets left="40.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Label>
+                              <TextField prefHeight="25.0" prefWidth="122.0" />
+                              <Label layoutX="112.0" layoutY="20.0" text="Marca:">
+                                 <HBox.margin>
+                                    <Insets left="40.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Label>
+                              <TextField layoutX="174.0" layoutY="20.0" prefHeight="25.0" prefWidth="122.0" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="0.0" prefWidth="778.0" spacing="10.0">
+                           <children>
+                              <Label text="Descripción:">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="40.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <TextField prefHeight="25.0" prefWidth="227.0" />
+                              <Label layoutX="20.0" layoutY="20.0" text="Grupo">
+                                 <HBox.margin>
+                                    <Insets left="40.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Label>
+                              <TextField layoutX="95.0" layoutY="20.0" prefHeight="25.0" prefWidth="122.0" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <HBox alignment="CENTER" prefHeight="90.0" prefWidth="201.0">
+                     <children>
+                        <ImageView fitHeight="90.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/loupe.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+            <VBox>
+               <children>
+                  <HBox alignment="CENTER" prefHeight="295.0" prefWidth="778.0">
+                     <children>
+                        <TableView fx:id="productTableView" prefHeight="232.0" prefWidth="716.0" styleClass="table-column" stylesheets="@../values/style.css" />
+                        <VBox alignment="CENTER" style="-fx-border-color: #6F6F6F;">
+                           <children>
+                              <ImageView fitHeight="147.0" fitWidth="133.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/addImage-x512.png" />
+                                 </image>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </ImageView>
+                              <Button mnemonicParsing="false" prefHeight="28.0" prefWidth="144.0" text="Cambiar imagen..." />
+                           </children>
+                        </VBox>
+                     </children>
+                     <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </padding>
+                  </HBox>
+               </children>
+            </VBox>
+        </items>
+      </SplitPane>
+   </center>
+</BorderPane>

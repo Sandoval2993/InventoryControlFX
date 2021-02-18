@@ -10,9 +10,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -33,6 +35,8 @@ public class MenuController implements Initializable {
     private Button settingButton;
     @FXML
     private Button exitButton;
+    @FXML
+    private Pane paneTest;
 
     private double xOffset = 0;
     private double yOffset = 0;
@@ -41,17 +45,21 @@ public class MenuController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
     }
 
-    public void PurchasingButtonOnAction(ActionEvent event){
-       createPurchasingForm();
+    public void PurchasingButtonOnAction(ActionEvent event) {
+        createPurchasingForm();
 
     }
 
-    public void exitButtonOnAction(ActionEvent event){
-        Stage stage = (Stage)exitButton.getScene().getWindow();
+    public void ProductListButtonOnAction(ActionEvent event) {
+        createProductListForm();
+    }
+
+    public void exitButtonOnAction(ActionEvent event) {
+        Stage stage = (Stage) exitButton.getScene().getWindow();
         stage.close();
     }
 
-    public void createPurchasingForm(){
+    public void createPurchasingForm() {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("../view/Purchasing.fxml"));
             Stage stage = new Stage();
@@ -68,31 +76,70 @@ public class MenuController implements Initializable {
             root.setOnMouseDragged(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    stage.setX(event.getScreenX()-xOffset);
-                    stage.setY(event.getScreenY()-yOffset);
+                    stage.setX(event.getScreenX() - xOffset);
+                    stage.setY(event.getScreenY() - yOffset);
                 }
             });
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             e.getCause();
         }
     }
 
+    public void createProductListForm() {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("../view/ProductList.fxml"));
+            Stage stage = new Stage();
+            stage.initStyle(StageStyle.TRANSPARENT);
+            stage.setScene(new Scene(root));
+            stage.show();
+            root.setOnMousePressed(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    xOffset = event.getSceneX();
+                    yOffset = event.getSceneY();
+                }
+            });
+            root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    stage.setX(event.getScreenX() - xOffset);
+                    stage.setY(event.getScreenY() - yOffset);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+    }
+
+    public void loadFXML(ActionEvent event) throws IOException {
+        paneTest.getChildren().removeAll();
+        Pane newLoadedPane = FXMLLoader.load(getClass().getResource("../view/ProductList.fxml"));
+        paneTest.getChildren().add(newLoadedPane);
+    }
+
+    public void loadFXML2(ActionEvent event) throws IOException {
+        paneTest.getChildren().removeAll();
+        Pane newLoadedPane = FXMLLoader.load(getClass().getResource("../view/ProductRegistration.fxml"));
+        paneTest.getChildren().add(newLoadedPane);
+    }
+
     @FXML
-    public void min(MouseEvent event){
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+    public void min(ActionEvent event) {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setIconified(true);
     }
 
     @FXML
-    public void max(MouseEvent event){
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+    public void max(ActionEvent event) {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setFullScreen(true);
     }
 
     @FXML
-    public void close(MouseEvent event){
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+    public void close(ActionEvent event) {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
     }
 }
