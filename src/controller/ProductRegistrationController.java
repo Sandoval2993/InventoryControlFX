@@ -108,10 +108,9 @@ public class ProductRegistrationController implements Initializable {
     private SpinnerValueFactory<Integer> spinnerValueFactory;
     private Alert alert = new Alert(Alert.AlertType.INFORMATION);
     private Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
-    private byte[] imageBytes;
     private Map listGroupMap;
     private AlertBox alertBox = new AlertBox();
-    private ImageProcessor imageProcessor = new ImageProcessor();
+    private ImageProcessor imageProcessor;
 
     public ProductRegistrationController() throws IOException {
     }
@@ -133,10 +132,6 @@ public class ProductRegistrationController implements Initializable {
 //        fileChooser.setInitialDirectory(new File("C:\\Users");
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.gif"));
 
-        //Set values default
-        productDTO.setInventoryable("YES");
-        groupComboBox.setEditable(false);
-
         defaultOverview();
 
         productTextField.textProperty().addListener(((observableValue, oldValue, newValue) -> productTextField.setText(newValue.toUpperCase())));
@@ -153,24 +148,8 @@ public class ProductRegistrationController implements Initializable {
             image = new Image(imageFile.getAbsoluteFile().toURI().toString(), productImageView.getFitWidth(), productImageView.getFitHeight(), true, true);
             productImageView.setImage(image);
             productImageView.setPreserveRatio(true);
-            imageBytes = getFileBytes(imageFile);
+            imageProcessor = new ImageProcessor(imageFile);
         }
-    }
-
-    public byte[] getFileBytes(File file) throws IOException {
-        FileInputStream fileInputStream = null;
-        byte[] bytes = new byte[(int) file.length()];
-        try {
-            fileInputStream = new FileInputStream(file);
-            fileInputStream.read(bytes);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (fileInputStream != null) {
-                fileInputStream.close();
-            }
-        }
-        return bytes;
     }
 
     public void addGroupImageViewOnAction(MouseEvent event) {
@@ -201,7 +180,7 @@ public class ProductRegistrationController implements Initializable {
                     groupDAO.create(groupDTO);
                     updateListCombobox();
                 }
-                productDTO.setImageBytes(imageBytes);
+                productDTO.setImageBytes(imageProcessor.getImageBytes());
                 productDTO.setName(productTextField.getText());
                 productDTO.setBrand(brandTextField.getText());
                 productDTO.setDescription(descriptionTextField.getText());
@@ -262,8 +241,8 @@ public class ProductRegistrationController implements Initializable {
             brandTextField.setText(productDTO.getBrand());
             descriptionTextField.setText(productDTO.getDescription());
             priceTextField.setText(String.valueOf(productDTO.getPrice()));
-            imageBytes = productDTO.getImageBytes();
-            buildImageProduct(productDTO.getImageBytes());
+            imageProcessor = new ImageProcessor(productDTO.getImageBytes());
+            productImageView.setImage(imageProcessor.getImage());
             lockStatusComponents(true);
             visibleStatusComponents(true);
             if (groupDAO.read(productDTO.getGroupId()) != null) {
@@ -273,11 +252,6 @@ public class ProductRegistrationController implements Initializable {
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
-    }
-
-    public void buildImageProduct(byte[] bytes) {
-        image = new Image(new ByteArrayInputStream(bytes));
-        productImageView.setImage(image);
     }
 
     public boolean validateFields() {
@@ -349,13 +323,16 @@ public class ProductRegistrationController implements Initializable {
         defaultValueSpinner();
         defaultValueGroupCombobox();
         defaultImageProduct();
-        clearProductRegistration();
+        initialsValuesProductRegistration();
         lockStatusComponents(false);
         visibleStatusComponents(false);
     }
 
     public void defaultSearchView() throws SQLException {
+        int valueSpinner = productIdSpinner.getValue();
         updateValueFactorySpinner();
+        productIdSpinner.getValueFactory().setValue(valueSpinner);
+
         updateListCombobox();
         lockStatusComponents(true);
         visibleStatusComponents(true);
@@ -372,16 +349,16 @@ public class ProductRegistrationController implements Initializable {
 
     public void defaultImageProduct() {
         try {
-            ImageProcessor imageProcessor = new ImageProcessor();
+            imageProcessor = new ImageProcessor();
             productImageView.setImage(imageProcessor.getImage());
             productImageView.setPreserveRatio(true);
-            imageBytes = imageProcessor.getImageBytes();
         } catch (IOException exception) {
             exception.printStackTrace();
         }
     }
 
-    public void clearProductRegistration() {
+    public void initialsValuesProductRegistration() {
+        productDTO.setInventoryable("YES");
         productRadioButton.setSelected(true);
         idTextField.clear();
         productTextField.clear();
@@ -419,14 +396,16 @@ public class ProductRegistrationController implements Initializable {
     public void updateValueFactorySpinner() {
         try {
             productList = product.getProductList();
-            int sizeProductList = productList.size();
+            int maxValue = productList.size()+1;
+            int initialValue = maxValue;
+
             //llenando Spinner
             spinnerValueFactory = null;
-            spinnerValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, sizeProductList + 1, sizeProductList + 1);
+            spinnerValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, maxValue, initialValue);
             spinnerValueFactory.setWrapAround(true);
             productIdSpinner.setValueFactory(spinnerValueFactory);
             spinnerValueFactory.valueProperty().addListener(((observableValue, oldValue, newValue) -> {
-                if (newValue != sizeProductList + 1) {
+                if (newValue != maxValue) {
                     searchProduct();
                 } else {
                     defaultOverview();
